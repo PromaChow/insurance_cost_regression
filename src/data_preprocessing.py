@@ -22,8 +22,9 @@ def pre_processing_data(df1, df2):
     df['Hospital_tier'] = df['Hospital_tier'].apply(clean_tier)
     df['City_tier'] = df['City_tier'].apply(clean_tier)
 
-    df['NumberOfMajorSurgeries'] = pd.to_numeric(df['NumberOfMajorSurgeries'], errors='coerce')
     df['NumberOfMajorSurgeries'] = df['NumberOfMajorSurgeries'].replace('No major surgery', 0)
+    df['NumberOfMajorSurgeries'] = pd.to_numeric(df['NumberOfMajorSurgeries'], errors='coerce')
+    
 
     def one_hot(df, drop_first=True):
     
@@ -38,6 +39,4 @@ def pre_processing_data(df1, df2):
     df = one_hot(df)
     
     return df
-
-
 
