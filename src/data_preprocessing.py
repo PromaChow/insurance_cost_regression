@@ -7,13 +7,13 @@ def pre_processing_data(df1, df2):
     df = pd.merge(df1, df2, on='Customer ID', how='inner')
     df = df.drop(columns=["Customer ID"])
     
+    df = df[~df.eq('?').any(axis=1)]
+    df.rename(columns=lambda x: x.replace(' ', '_'), inplace=True) 
+
     df['year'] = pd.to_numeric(df['year'], errors='coerce')
     current_year = datetime.now().year
     df['age'] = current_year - df['year']
     df = df.drop(columns=['year', 'month', 'date'])
-
-    df = df[~df.eq('?').any(axis=1)]
-    df.rename(columns=lambda x: x.replace(' ', '_'), inplace=True)  
 
     def clean_tier(entry):
         return int(entry[-1])
