@@ -44,28 +44,6 @@ def randomforest_regression(X_train, X_test, y_train, y_test):
     
     return model
 
-import numpy as np
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from data_preprocessing import pre_processing_data
-df1 = pd.read_csv("../data/hospitalisation_details.csv")
-df2 = pd.read_csv("../data/medical_examinations.csv")
-df = pre_processing_data(df1, df2)
 
-X = df.drop(columns="charges")
-X = X.values
-
-y = df['charges'].values.reshape(-1, 1)
-
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
-
-model = neural_net(X_train, y_train, X_test, y_test)
-# model = randomforest_regression(X_train, X_test, y_train, y_test)
 
 
