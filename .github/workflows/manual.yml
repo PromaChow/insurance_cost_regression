@@ -1,0 +1,30 @@
+name: Manual workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9  # You can change this to your preferred Python version
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # Replace with your dependency installation command
+
+    - name: Make run.sh executable
+      run: |
+        chmod +x run.sh
+        
+    - name: Run your ML pipeline
+      run: |
+        ./run.sh  # Replace with the command to run your ML pipeline
