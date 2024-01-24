@@ -80,7 +80,7 @@ The random forest model is able to give a clear interpretation of (relative) fea
 5. number of children the customer has
 6. HBA1C measure
 
-These agrees with the findings from EDA.
+These largely agrees with the findings from EDA, except for the HBA1C measure, where a visual inspection shows no correlation. Nonetheless, the HBA1C measure is a relatively insignificant factor compared to the top 5 factors.
 
 
 
