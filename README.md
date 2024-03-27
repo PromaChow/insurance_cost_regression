@@ -1,5 +1,6 @@
-A simple machine learning project on a regression problem. 
+#### Summary
 
+A Random Forest regression model in ScikitLearn to predict the cost of insurance, achieving a good performance with a R-squared score of 0.9.
 
 #### DataSet 
 The datasets used here for predicting the cost of healthcare insurance is from the following Kaggle URL :
