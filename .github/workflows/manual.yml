@@ -1,30 +1,68 @@
-name: Manual workflow
-
+name: INSURANCE
 on:
-  workflow_dispatch:
+  push:
+    branches: "*"
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Start Energy Measurement
+        uses: green-coding-solutions/eco-ci-energy-estimation@v4
+        with:
+          json-output: true
+          task: start-measurement
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run:
+          "pip install -r requirements.txt  # Replace with your dependency installation
+          command
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9  # You can change this to your preferred Python version
+          "
+      - id: measurement-4
+        name: Record Measurement After Install dependencies
+        uses: green-coding-solutions/eco-ci-energy-estimation@v4
+        with:
+          json-output: true
+          label: Install dependencies
+          task: get-measurement
+      - name: Make run.sh executable
+        run: "chmod +x run.sh
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt  # Replace with your dependency installation command
+          "
+      - id: measurement-6
+        name: Record Measurement After Make run.sh executable
+        uses: green-coding-solutions/eco-ci-energy-estimation@v4
+        with:
+          json-output: true
+          label: Make run.sh executable
+          task: get-measurement
+      - name: Run your ML pipeline
+        run: "./run.sh  # Replace with the command to run your ML pipeline
 
-    - name: Make run.sh executable
-      run: |
-        chmod +x run.sh
-        
-    - name: Run your ML pipeline
-      run: |
-        ./run.sh  # Replace with the command to run your ML pipeline
+          "
+      - id: measurement-8
+        name: Record Measurement After Run your ML pipeline
+        uses: green-coding-solutions/eco-ci-energy-estimation@v4
+        with:
+          json-output: true
+          label: Run your ML pipeline
+          task: get-measurement
+      - id: display-measurement
+        name: Display Energy Results
+        uses: green-coding-solutions/eco-ci-energy-estimation@v4
+        with:
+          json-output: true
+          task: display-results
+      - name: Save Total Energy Consumption Data
+        run: echo '${{ steps.final-measurement.outputs.data-total-json }}' > total_energy_consumption.json
+      - name: Upload Energy Consumption Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: total-energy-consumption
+          path: total_energy_consumption.json
